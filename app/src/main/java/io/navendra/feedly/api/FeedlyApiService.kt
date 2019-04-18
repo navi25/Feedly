@@ -1,0 +1,18 @@
+package io.navendra.feedly.api
+
+import io.navendra.feedly.AppConstants
+import io.navendra.feedly.data.Feed
+import kotlinx.coroutines.Deferred
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Path
+
+interface FeedlyApiService{
+
+    @GET(AppConstants.FEEDS_ENDPOINT)
+    fun getFeeds() : Deferred<Response<List<Feed>>>
+
+    @GET(AppConstants.FEED_ITEM_ENDPOINT)
+    fun getFeedById(@Path(AppConstants.FEED_ID) feedId: Long) : Deferred<Response<List<Feed>>>
+
+}
