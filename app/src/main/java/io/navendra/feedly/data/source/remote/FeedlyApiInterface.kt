@@ -1,4 +1,4 @@
-package io.navendra.feedly.api
+package io.navendra.feedly.data.source.remote
 
 import io.navendra.feedly.AppConstants
 import io.navendra.feedly.data.Feed
@@ -7,7 +7,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface FeedlyApiService{
+interface FeedlyApiInterface{
 
     @GET(AppConstants.FEEDS_ENDPOINT)
     fun getFeeds() : Deferred<Response<List<Feed>>>
