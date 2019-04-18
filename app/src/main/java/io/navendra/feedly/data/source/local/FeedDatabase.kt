@@ -5,6 +5,6 @@ import androidx.room.RoomDatabase
 import io.navendra.feedly.data.Feed
 
 @Database(entities = [Feed::class],version = 1)
-abstract class LocalDB : RoomDatabase(){
+abstract class FeedDatabase : RoomDatabase(){
     abstract fun feedDAO(): FeedDAO
 }

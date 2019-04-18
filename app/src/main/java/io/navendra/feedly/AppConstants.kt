@@ -9,6 +9,7 @@ object AppConstants {
     const val FEED_ITEM_ENDPOINT = "/feeds/$FEED_ID"
 
     object Room{
+        const val FEED_DATABASE = "feedDatabase"
         const val FEED_TABLE = "feedTable"
         const val GET_ALL_FEED = "SELECT * FROM $FEED_TABLE"
     }
