@@ -22,6 +22,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    androidExtensions {
+        experimental = true
+    }
 
 }
 
@@ -33,6 +36,8 @@ dependencies {
     def okhttp3_version = "3.12.0"
     def kotlinCoroutineVersion = "1.0.1"
     def dagger2_version = "2.15"
+    def room_version = "2.1.0-alpha06"
+    def lifecycle_verison = "2.1.0-alpha04"
 //    def picassoVersion = "2.71828"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -78,9 +83,16 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger2_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
 
-
+    //Room
+    implementation "androidx.room:room-common:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    //Lifecycle
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_verison"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_verison"
 
     testImplementation 'junit:junit:4.12'
+    androidTestImplementation "androidx.room:room-testing:$room_version"
     androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
 }
