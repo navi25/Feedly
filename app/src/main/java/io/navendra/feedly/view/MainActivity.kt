@@ -8,11 +8,15 @@ import dagger.android.AndroidInjection
 import io.navendra.feedly.R
 import io.navendra.feedly.data.Feed
 import io.navendra.feedly.viewmodel.FeedViewModel
+import io.navendra.feedly.viewmodel.FeedViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(){
 
-    private var feedViewModel: FeedViewModel? = null
+    @Inject
+    lateinit var feedViewModelFactory: FeedViewModelFactory
+    private lateinit var feedViewModel : FeedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,21 +24,29 @@ class MainActivity : AppCompatActivity(){
 
         AndroidInjection.inject(this)
 
-        feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
+        feedViewModel = ViewModelProviders.of(this, feedViewModelFactory).get(FeedViewModel::class.java)
 
-        feedViewModel?.feedResult()?.observe(this, Observer {
+        feedViewModel.feedResult().observe(this, Observer {
             updateFeedView(it)
         })
 
-        feedViewModel?.loadFeeds()
+        feedViewModel.feedError().observe(this, Observer {
+            updateFeedView(it)
+        })
+
+        feedViewModel.loadFeeds()
     }
 
-    fun updateFeedView(feeds : List<Feed>){
+    private fun updateFeedView(feeds : List<Feed>){
         textView.text = feeds.size.toString()
     }
 
+    private fun updateFeedView(error: String){
+        textView.text = error
+    }
+
     override fun onStop() {
-        feedViewModel?.disposeElements()
+        feedViewModel.disposeElements()
         super.onStop()
 
     }

@@ -1,6 +1,5 @@
 package io.navendra.feedly.di.modules
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -8,6 +7,7 @@ import dagger.Provides
 import io.navendra.feedly.data.source.remote.FeedlyApiInterface
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -25,7 +25,7 @@ class NetworkModule (private val baseUrl: String){
         .client(okHttpClient)
         .baseUrl(baseUrl)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
 
     @Provides @Singleton

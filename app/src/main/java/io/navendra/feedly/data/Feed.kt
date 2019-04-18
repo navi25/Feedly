@@ -12,11 +12,11 @@ import io.navendra.feedly.AppConstants.Room as RoomConstants
 data class Feed(
 
     @PrimaryKey
-    @Json(name="id") val id: String,
+    @Json(name="_id") val id: String,
     @Json(name="feed") val feed:String,
     @Json(name = "user") val user:String,
     @Json(name = "user_id") val userId:Long,
     @Json(name = "client_id") val clientId:Long,
-    @Json(name = "created_at") val createdAt : String
+    @Json(name = "Created_date") val createdAt : String
 
 ) : Parcelable

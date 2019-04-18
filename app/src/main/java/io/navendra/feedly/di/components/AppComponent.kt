@@ -9,8 +9,7 @@ import io.navendra.feedly.di.modules.NetworkModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidInjectionModule::class, BuilderModule::class, AppModule::class,
-    NetworkModule::class])
+@Component(modules = [AndroidInjectionModule::class, BuilderModule::class, AppModule::class, NetworkModule::class])
 interface AppComponent {
     fun inject(app : FeedlyApplication)
 }

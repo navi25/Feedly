@@ -29,7 +29,7 @@ class AppModule(val app: Application) {
     @Provides @Singleton
     fun provideFeedDatabase(app: Application) : FeedDatabase = Room.databaseBuilder(app,
         FeedDatabase::class.java,RoomDatabase.FEED_DATABASE)
-//        /*.addMigrations(MIGRATION_1_2)*/
+        /*.addMigrations(MIGRATION_1_2)*/
         .fallbackToDestructiveMigration()
         .build()
 

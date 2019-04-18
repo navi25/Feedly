@@ -5,15 +5,17 @@ import io.navendra.feedly.data.Feed
 import io.navendra.feedly.data.source.local.FeedDAO
 import io.navendra.feedly.data.source.remote.FeedlyApiInterface
 import io.reactivex.Observable
+import retrofit2.Response
 import javax.inject.Inject
 
 class FeedRepository @Inject constructor(private val feedlyApi : FeedlyApiInterface,
                                          private val feedDAO: FeedDAO){
 
-    fun getAllFeed() : Observable<List<Feed>>{
-        val localFeedsObservable = getFeedsFromLocalDb()
+    fun getAllFeed() : Observable<Response<List<Feed>>>{
+//        val localFeedsObservable = getFeedsFromLocalDb()
         val remoteFeedsObservable = getFeedsFromRemoteApi()
-        return Observable.concatArrayEager(localFeedsObservable, remoteFeedsObservable)
+        return remoteFeedsObservable
+//        return Observable.concatArrayEager(localFeedsObservable, remoteFeedsObservable)
     }
 
     private fun getFeedsFromLocalDb(): Observable<List<Feed>>{
@@ -24,10 +26,11 @@ class FeedRepository @Inject constructor(private val feedlyApi : FeedlyApiInterf
             }
     }
 
-    private fun getFeedsFromRemoteApi(): Observable<List<Feed>>?{
+    private fun getFeedsFromRemoteApi(): Observable<Response<List<Feed>>>{
         return feedlyApi.getAllFeed()
             .doOnNext {
-                for (item in it) {
+                val feeds = it.body() ?: emptyList()
+                for (item in feeds) {
                     feedDAO.insertFeed(item)
                 }
             }
